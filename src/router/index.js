@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { UseUserStore } from '@/stores'
 import Layout from '@/views/Layout/index.vue'
 import User from '@/views/User/index.vue'
 import Login from '@/views/Login/index.vue'
@@ -52,6 +53,13 @@ const router = createRouter({
       top: 0 ,
     }
   }
+})
+
+// 全局拦截器
+router.beforeEach((to) => {
+  // canUserAccess() 返回 `true` 或 `false`
+  const userstore = UseUserStore()
+  if (!userstore.token && to.path !== '/login') return '/login'
 })
 
 export default router

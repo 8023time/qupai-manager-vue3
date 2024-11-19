@@ -1,4 +1,20 @@
 <script setup>
+import { userloginservice } from '@/api/user.js'
+import { ref } from 'vue'
+import router from '@/router'
+
+
+const formdatainformation = ref() // 用来记录表单的一些数据
+const fromdata = ref({
+  username:'',
+  password:''
+})
+const userlogin = async () => {
+  const res = await userloginservice(fromdata.value)
+  ElMessage.success('登录成功')
+  console.log(res);
+  router.push('/')
+}
 
 </script>
 
@@ -13,6 +29,7 @@
       <el-col :span="7" class="login-right">
 
         <el-form
+        :model="fromdata"
         class="demo-ruleForm"
         label-width="auto">
           <el-form-item class="el-form-item">
@@ -20,6 +37,7 @@
           </el-form-item>
           <el-form-item class="el-form-item" label="用户名:">
             <el-input 
+            v-model="fromdata.username"
             size="large" 
             placeholder="请输入用户名" 
             prefix-icon="el-icon-user">
@@ -27,6 +45,7 @@
           </el-form-item>
           <el-form-item class="el-form-item" label="密码:">
             <el-input
+            v-model="fromdata.password"
               size="large"
               placeholder="请输入密码"
               prefix-icon="el-icon-lock"
@@ -38,7 +57,7 @@
             <span class="captcha">123333</span>
           </el-form-item>
           <el-form-item class="el-form-item" style="margin-top: 15%;">
-            <el-button type="primary" class="login-button">登录</el-button>
+            <el-button @click="userlogin" type="primary" class="login-button">登录</el-button>
           </el-form-item>
         </el-form>
 

@@ -35,4 +35,13 @@ export default defineConfig({
       },
     },
   },
+  devServer: {
+    proxy: {
+      '/auction': {
+        target: 'http://43.138.238.42:8090',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
