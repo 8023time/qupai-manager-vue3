@@ -20,7 +20,7 @@ function onconfirm () {
 
 <template>
     <div class="container">
-        <div class="title">趣拍助手(管理端)</div>
+        <div class="title">趣拍助手</div>
         <div>
             <ul>
                 <li>你好,拍卖师!<a @click="router.push('/user')"><el-icon><User /></el-icon>高哥</a></li>
