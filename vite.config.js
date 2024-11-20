@@ -35,4 +35,13 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      '/api': { // 拦截所有包含 /api 的请求
+        target: 'http://43.138.238.42:8090', // 目标后台服务地址
+        changeOrigin: true,             // 是否改变请求源
+        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径，将 /api 替换为空
+      },
+    },
+  },
 })

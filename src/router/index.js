@@ -55,11 +55,11 @@ const router = createRouter({
   }
 })
 
-// 全局拦截器
-router.beforeEach((to) => {
-  // canUserAccess() 返回 `true` 或 `false`
-  const userstore = UseUserStore()
-  if (!userstore.token && to.path !== '/login') return '/login'
-})
+// //全局拦截器
+// router.beforeEach((to) => {
+//   // canUserAccess() 返回 `true` 或 `false`
+//   const userstore = UseUserStore()
+//   if (!userstore.token && to.path !== '/login') return '/login'
+// })
 
 export default router
