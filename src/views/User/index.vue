@@ -43,31 +43,31 @@ const blackinformation = () => {
           <!-- 拍卖师名字 -->
           <li>
             <el-form-item label="名字:">
-              <el-input placeholder="高哥"></el-input>
+            高哥
             </el-form-item>
           </li>
           <!-- 用户名 -->
           <li>
             <el-form-item label="用户名:">
-              <el-input placeholder="太卷"></el-input>
+            太卷
             </el-form-item>
           </li>
           <!-- 电话 -->
           <li>
             <el-form-item label="电话:">
-              <el-input placeholder="1212121212"></el-input>
+            1212121212
             </el-form-item>
           </li>
           <!-- 联系邮箱 -->
           <li>
             <el-form-item label="联系邮箱:">
-              <el-input placeholder="145364543@1425.uyh"></el-input>
+            145364543@1425.uyh
             </el-form-item>
           </li>
           <!-- 举办拍卖会次数 -->
           <li>
             <el-form-item label="举办拍卖会次数:">
-              <el-input placeholder="145"></el-input>
+            145
             </el-form-item>
           </li>
         </ul>
@@ -85,40 +85,43 @@ const blackinformation = () => {
           <!-- 拍卖师名字 -->
           <li>
             <el-form-item label="名字:">
-              <el-input placeholder="高哥"></el-input>
+              <el-input placeholder="请输入名字"></el-input>
             </el-form-item>
           </li>
           <!-- 用户名 -->
           <li>
             <el-form-item label="用户名:">
-              <el-input placeholder="太卷"></el-input>
+              <el-input placeholder="请输入用户名"></el-input>
             </el-form-item>
           </li>
           <!-- 电话 -->
           <li>
             <el-form-item label="电话:">
-              <el-input placeholder="1212121212"></el-input>
+              <el-input placeholder="请输入电话"></el-input>
             </el-form-item>
           </li>
           <!-- 联系邮箱 -->
           <li>
             <el-form-item label="联系邮箱:">
-              <el-input placeholder="145364543@1425.uyh"></el-input>
+              <el-input placeholder="请输入邮箱"></el-input>
             </el-form-item>
           </li>
            <!-- 请输入旧密码 -->
            <li>
             <el-form-item label="请输入旧密码:">
-              <el-input></el-input>
+              <el-input placeholder="请输入旧密码"></el-input>
             </el-form-item>
           </li>
           <!-- 请输入新密码 -->
           <li>
             <el-form-item label="请输入新密码:">
-              <el-input></el-input>
+              <el-input placeholder="请输入新密码"></el-input>
             </el-form-item>
           </li>
         </ul>
+        <div class="submit">
+          <el-button type="primary">提交</el-button>
+        </div>
         </div>
       </el-form>
       </el-card>
@@ -137,5 +140,12 @@ const blackinformation = () => {
   {
     margin-top: 30px;
   }
+}
+.submit
+{
+  margin-top: 30px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 </style>
