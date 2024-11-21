@@ -11,7 +11,7 @@ const value1 =ref()
   <SameCard title="订单管理">
     <el-form inline>
       <el-form-item label="订单分类:" style="width: 240px;">
-        <el-select v-model="articledatamessage">
+        <el-select>
           <el-option label="全部订单" value="全部订单">全部订单</el-option>
           <el-option label="待派发" value="待派发">待派发</el-option>
           <el-option label="已发货" value="已发货">已发货</el-option>
@@ -25,20 +25,17 @@ const value1 =ref()
         <el-input placeholder="请输写商品名"></el-input>
       </el-form-item>
       <el-form-item label="下单时间:">
-        
-          <div class="demo-date-picker">
-            <div class="block">
-              <el-date-picker
-                v-model="value1"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始时间"
-                end-placeholder="终止时间"
-                size="default"
-              />
-            </div>
+        <div class="demo-date-picker">
+          <div class="block">
+            <el-date-picker
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="终止时间"
+              size="default"
+            />
           </div>
-
+        </div>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">搜索</el-button>
@@ -46,9 +43,7 @@ const value1 =ref()
       </el-form-item>
     </el-form>
 
-    <!-- 在下面的这里就是用来存储相关数据的地方 -->
-    <el-table :data="articledatamessage" style="width: 100%; height: 100%;" v-loading="loading">
-      <!-- 在这里也是用到的是插槽 -->
+    <el-table style="width: 100%; height: 100%;" v-loading="loading">
       <el-table-column label="订单号">
         12
       </el-table-column>
@@ -59,15 +54,11 @@ const value1 =ref()
         12
       </el-table-column>
       <el-table-column label="手机号">
-
       </el-table-column>
       <el-table-column label="下单时间">
-
       </el-table-column>
       <el-table-column label="实收积分">
-
       </el-table-column>
-      <!-- 在这里的话就用到的就是插槽 -->
       <el-table-column label="操作">
         <template #default="{ row }">
           <el-button type="primary" circle :icon="Edit"></el-button>
@@ -77,7 +68,6 @@ const value1 =ref()
       </el-table-column>
     </el-table>
 
-    <!-- 下面就是放的是一些表格的数据的切换的东西小组件 -->
     <el-pagination
       v-model:current-page="articlerootref"
       v-model:page-size="articlerootref"
@@ -89,8 +79,7 @@ const value1 =ref()
       @current-change="onCurrentChange"
       style="justify-content: flex-end"
     />
-
-</SameCard>
+  </SameCard>
 </template>
 
 <style scoped>
@@ -101,11 +90,9 @@ const value1 =ref()
   flex-wrap: wrap;
 }
 
-
 .el-form-item {
   align-items: center;
 }
-
 
 .demo-date-picker .block {
   padding: 30px 0;

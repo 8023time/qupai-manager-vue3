@@ -52,10 +52,6 @@ const userlogin = async () => {
               show-password
             ></el-input>
           </el-form-item>
-          <el-form-item class="captcha-box" label="验证码:">
-            <el-input style="width: 48%;" size="large" placeholder="请输入验证码"></el-input>
-            <span class="captcha">123333</span>
-          </el-form-item>
           <el-form-item class="el-form-item" style="margin-top: 15%;">
             <el-button @click="userlogin" type="primary" class="login-button">登录</el-button>
           </el-form-item>
@@ -67,6 +63,11 @@ const userlogin = async () => {
 </template>
 
 <style scoped>
+.demo-ruleForm
+{
+  align-items: center;
+  justify-content: center;
+}
 .login-container {
   position: fixed;
   left: 0;
@@ -104,6 +105,8 @@ const userlogin = async () => {
 .login-right {
   position: relative;
   display: flex;
+  /* align-items: center;
+  justify-content: center; */
   height: 60%;
   padding-left: 5%;
   padding-right: 5%;
@@ -131,23 +134,6 @@ justify-content: center;
   width: 100%;
   align-items: centers;
   height: 120%;
-}
-
-.captcha-box {
-  justify-content: space-between;
-  display: flex;
-
-}
-
-.captcha {
-  height: 110%;
-  margin-left: 10px;
-  font-size: 1rem;
-  width: 40%;
-  padding: 5px 10px;
-  background: #f2f2f2;
-  border-radius: 5px;
-  color: #333;
 }
 
 .login-button {
