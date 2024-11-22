@@ -2,20 +2,35 @@
 import { userloginservice } from '@/api/user.js'
 import { ref } from 'vue'
 import router from '@/router'
+import { UseUserStore } from '@/stores';
 
 
 const formdatainformation = ref() // 用来记录表单的一些数据
+const userstore = UseUserStore()
 const fromdata = ref({
   username:'',
   password:''
 })
 const userlogin = async () => {
+  await formdatainformation.value.validate()
   const res = await userloginservice(fromdata.value)
+  userstore.settoken(res.data.data.token)
   ElMessage.success('登录成功')
   console.log(res);
   router.push('/')
 }
 
+// 登录逻辑
+const formrules = {
+  username:[
+  { required: true, message: '请输入用户名', trigger: 'change' },
+  { min: 2, max: 8, message: '用户名必须为2-8为字符', trigger: 'change' },
+  ],
+  password:[
+  { required: true, message: '请输入你的密码', trigger: 'change' },
+  { min: 6, max: 15, message: '密码必须为6-15位字符', trigger: 'change' },
+  ]
+}
 </script>
 
 <template>
@@ -29,13 +44,15 @@ const userlogin = async () => {
       <el-col :span="7" class="login-right">
 
         <el-form
+        ref="formdatainformation"
+        :rules="formrules"
         :model="fromdata"
         class="demo-ruleForm"
         label-width="auto">
           <el-form-item class="el-form-item">
             <h2 class="login-title">登录</h2>
           </el-form-item>
-          <el-form-item class="el-form-item" label="用户名:">
+          <el-form-item class="el-form-item" label="用户名:" prop="username">
             <el-input 
             v-model="fromdata.username"
             size="large" 
@@ -43,7 +60,7 @@ const userlogin = async () => {
             prefix-icon="el-icon-user">
           </el-input>
           </el-form-item>
-          <el-form-item class="el-form-item" label="密码:">
+          <el-form-item class="el-form-item" label="密码:" prop="password">
             <el-input
             v-model="fromdata.password"
               size="large"

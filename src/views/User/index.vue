@@ -59,6 +59,11 @@ const onchangeinfor = () => {
         <el-form class="edit-form" label-width="auto" v-if="!ischangeinformation">
           <div class="form-grid">
             <!-- 表单项 -->
+
+            <el-form-item style="text-align: center;margin: 20px auto;display: flex;flex-grow: 10;">
+                <img  class="profile-avatar" src="@/assets/avatar.jpg" alt="">
+            </el-form-item>
+            <br>
             <el-form-item label="名字:">
               <el-input placeholder="请输入名字"></el-input>
             </el-form-item>
@@ -100,6 +105,15 @@ const onchangeinfor = () => {
   height: 100%; /* 使用原始高度 */
   gap: 20px;
   background-color: #f9f9f9;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 4px solid #f0f0f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* 左侧卡片样式 */

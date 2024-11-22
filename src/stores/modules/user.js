@@ -20,7 +20,6 @@ export const UseUserStore = defineStore('qupai-user',()=>{
     const setuserinformation = (obj) => {
         user.value = obj
     }
-
     return {
         token,
         settoken,
