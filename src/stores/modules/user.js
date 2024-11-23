@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { ref } from 'vue'
-// import { getuserinformation } from '@/api/user'
+import { ckeckuserinfo } from "@/api/user"
 export const UseUserStore = defineStore('qupai-user',()=>{
     //在这里存的就是这个token的值
     const token = ref('')
@@ -14,7 +14,7 @@ export const UseUserStore = defineStore('qupai-user',()=>{
     //在下面的这里存的就是用户的一些个人的信息
     const user = ref('')
     const getuserinfor = async() => {
-        // const res = await getuserinformation()
+        const res = await ckeckuserinfo()
         user.value=res.data.data
     }
     const setuserinformation = (obj) => {

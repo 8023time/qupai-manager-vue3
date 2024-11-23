@@ -11,10 +11,15 @@ import {
 } from '@element-plus/icons-vue'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
+import { UseUserStore } from '@/stores'
+import { removeusertoken } from '@/api/user'
 
-function onconfirm () {
-    router.push('/login')
-    ElMessage.success('退出登录成功!')
+const userstore = UseUserStore()
+const onconfirm = async () => {
+  await removeusertoken()
+  userstore.removetoken()
+  router.push('/login')
+  ElMessage.success('退出登录成功!')
 }
 </script>
 
@@ -23,7 +28,7 @@ function onconfirm () {
         <div class="title">趣拍助手</div>
         <div>
             <ul>
-                <li>你好,拍卖师!<a @click="router.push('/user')"><el-icon><User /></el-icon>高哥</a></li>
+                <li>你好,拍卖师!<a @click="router.push('/user')"><el-icon><User /></el-icon>{{userstore.user.name || userstore.user.nickName || "未知用户"}}</a></li>
                 <li>
                     <el-popconfirm title="确认要退出吗?" 
                     confirm-button-text="确认" 

@@ -43,7 +43,7 @@ const value1 =ref()
       </el-form-item>
     </el-form>
 
-    <el-table style="width: 100%; height: 100%;" v-loading="loading">
+    <el-table style="width: 100%;  height: 100%;" empty-text="亲,目前没有订单信息" v-loading="loading">
       <el-table-column label="订单号">
         12
       </el-table-column>

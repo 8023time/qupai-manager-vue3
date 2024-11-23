@@ -1,13 +1,16 @@
 <script setup>
 // 图片列表
 import { ref } from 'vue'
+import { UseUserStore } from '@/stores';
+import { onMounted } from 'vue'
 
-const imagenumber = ref(0)
-const changeimage = (data) => {
-    imagenumber.value = data
-}
+const userstore = UseUserStore()
+const userdatalist = ref()
+userdatalist.value = userstore.user
+onMounted(
+    ()=>userstore.getuserinfor()
+)
 </script>
-
 
 <template>
     <div class="profile-content">
@@ -22,34 +25,30 @@ const changeimage = (data) => {
                 label-width="auto"
                 >
                     <ul>
-                    <!-- 拍卖师名字 -->
                     <li>
-                        <el-form-item label="名字:">
-                        林黛玉
+                        <el-form-item label="姓名:">
+                        {{userdatalist.name || "未留名"}}
                         </el-form-item>
                     </li>
-                    <!-- 用户名 -->
                     <li>
                         <el-form-item label="用户名:">
-                        鸡你太美
+                        {{userdatalist.username || userdatalist.nickName || "未知用户"}}
                         </el-form-item>
                     </li>
-                    <!-- 电话 -->
                     <li>
                         <el-form-item label="电话:">
-                        12345678901
+                        {{userdatalist.phone || "还未添加联系电话"}}
                         </el-form-item>
                     </li>
-                    <!-- 联系邮箱 -->
+                    <!-- 未开发 -->
                     <li>
                         <el-form-item label="联系邮箱:">
-                        1234567890@qq.com
+                        {{"还未添加联系邮箱"}}
                         </el-form-item>
                     </li>
-                    <!-- 举办拍卖会次数 -->
                     <li>
                         <el-form-item label="举办拍卖会次数:">
-                        88
+                        {{userdatalist.chance || "还未举办过拍卖会"}}
                         </el-form-item>
                     </li>
                     </ul>

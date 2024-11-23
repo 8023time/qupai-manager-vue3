@@ -53,7 +53,7 @@ const value1 =ref()
     </el-form>
 
     <!-- 在下面的这里就是用来存储相关数据的地方 -->
-    <el-table :data="articledatamessage" style="width: 100%; height: 100%;" v-loading="loading">
+    <el-table :data="articledatamessage" empty-text="亲,目前没有商品信息" style="width: 100%; height: 100%;" v-loading="loading">
       <!-- 在这里也是用到的是插槽 -->
       <el-table-column label="商品名">
         12
