@@ -15,7 +15,7 @@ instance.interceptors.request.use(
     const userstore = UseUserStore()
     const token = userstore.token
     if(token){
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.token = token
         console.log(userstore.token);
     }else {
       console.warn('没有token!!!');

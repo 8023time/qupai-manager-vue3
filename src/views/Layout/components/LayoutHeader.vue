@@ -18,6 +18,7 @@ const userstore = UseUserStore()
 const onconfirm = async () => {
   await removeusertoken()
   userstore.removetoken()
+  userstore.user = {}
   router.push('/login')
   ElMessage.success('退出登录成功!')
 }

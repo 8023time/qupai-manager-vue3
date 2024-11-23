@@ -1,15 +1,9 @@
 <script setup>
-// 图片列表
 import { ref } from 'vue'
 import { UseUserStore } from '@/stores';
 import { onMounted } from 'vue'
 
 const userstore = UseUserStore()
-const userdatalist = ref()
-userdatalist.value = userstore.user
-onMounted(
-    ()=>userstore.getuserinfor()
-)
 </script>
 
 <template>
@@ -27,28 +21,33 @@ onMounted(
                     <ul>
                     <li>
                         <el-form-item label="姓名:">
-                        {{userdatalist.name || "未留名"}}
+                        {{userstore.user.name || "未留名"}}
+                        </el-form-item>
+                    </li>
+                    <li>
+                        <el-form-item label="昵称:">
+                        {{userstore.user.nickName || "未留名"}}
                         </el-form-item>
                     </li>
                     <li>
                         <el-form-item label="用户名:">
-                        {{userdatalist.username || userdatalist.nickName || "未知用户"}}
+                        {{userstore.user.username || "未知用户"}}
                         </el-form-item>
                     </li>
                     <li>
                         <el-form-item label="电话:">
-                        {{userdatalist.phone || "还未添加联系电话"}}
+                        {{userstore.user.phone || "还未添加联系电话"}}
                         </el-form-item>
                     </li>
                     <!-- 未开发 -->
-                    <li>
+                    <!-- <li>
                         <el-form-item label="联系邮箱:">
                         {{"还未添加联系邮箱"}}
                         </el-form-item>
-                    </li>
+                    </li> -->
                     <li>
                         <el-form-item label="举办拍卖会次数:">
-                        {{userdatalist.chance || "还未举办过拍卖会"}}
+                        {{userstore.user.chance || "还未举办过拍卖会"}}
                         </el-form-item>
                     </li>
                     </ul>

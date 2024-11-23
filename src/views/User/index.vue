@@ -2,60 +2,71 @@
 import { ref } from 'vue'
 import UserInformation from './conponent/UserInformation.vue';
 import { ElMessage } from 'element-plus';
-import { onMounted } from 'vue'
 import { UseUserStore } from '@/stores';
+import { onMounted } from 'vue'
 import { changeuserinfo } from '@/api/user';
 
 const userstore = UseUserStore()
-const userformdata = ref({ //这个的作用就是用来收集修改后的个人信息
-  id:'',
-  username:'',
-  name:'',
-  nickName:'',
-  password:'',
-  phone:'',
-})
+const userlist = userstore.user
+const { id, username, name, nickName } = userlist;
+const userformdata = ref({
+  id: id || '',
+  username: username || '',
+  name: name || '',
+  nickName: nickName || '',
+});
+const userformrules = {
+  username:[
+  { required: true, message: '请输入用户名', trigger: 'change' },
+  { min: 1, max: 10, message: '用户名必须为1-10位字符', trigger: 'change' },
+  ],
+  name:[
+  { required: true, message: '请输入你的名字', trigger: 'change' },
+  { min: 1, max: 10, message: '用户名必须为1-10位字符', trigger: 'change' },
+  ],
+  nickName:[
+  { required: true, message: '请输入你的昵称', trigger: 'change' },
+  { min: 1, max: 10, message: '用户名必须为1-10位字符', trigger: 'change' },
+  ]
+}
+// const { id,username,name,nickName} = userstore.user
 const historylist = ref([
   {
   startTime: '2024-11-22',
-  endTime: '2024-12-20',
-  status: '12',
-  name: '你的名字,你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字',
-  auctioneerId: '拍卖师'
+  endTime: '2024-12-29',
+  status: '已开展',
+  name: '近些年，随着人工智能（AI）技术的迅速发展，尤其是大模型的兴起，传统行业迎来了新的变革动力。大模型不仅具备强大的自然语言处理和图像识别能力，还在不同领域展现出灵活的自适应性。',
+  auctioneerId: '真卷'
   },
   {
   startTime: '2024-11-22',
-  endTime: '2024-12-20',
-  status: '12',
-  name: '你的名字',
-  auctioneerId: '拍卖师'
+  endTime: '2024-12-27',
+  status: '已开展',
+  name: '大模型在传统行业中面临的挑战',
+  auctioneerId: '太卷'
   },
   {
   startTime: '2024-11-22',
-  endTime: '2024-12-20',
-  status: '12',
-  name: '你的名字',
-  auctioneerId: '拍卖师'
+  endTime: '2024-12-24',
+  status: '已结束',
+  name: '大模型未来将不仅限于质量检测、风险控制等具体任务，还将进一步渗透到业务决策、客户体验优化等场景。企业可以借助大模型实时调整运营策略，提高业务的敏捷性和市场反应速度。',
+  auctioneerId: '真真卷'
   },
   {
-  startTime: '2024-11-22',
+  startTime: '2024-11-24',
   endTime: '2024-12-20',
-  status: '12',
-  name: '你的名字',
-  auctioneerId: '拍卖师'
+  status: '已结束',
+  name: '科技问题回答',
+  auctioneerId: '太卷'
   },
   {
-  startTime: '2024-11-22',
+  startTime: '2024-11-29',
   endTime: '2024-12-20',
-  status: '12',
-  name: '你的名字',
-  auctioneerId: '拍卖师'
+  status: '已取消',
+  name: '制造业是最早应用大模型的传统行业之一。',
+  auctioneerId: '太卷'
   }
 ])
-onMounted(
-  ()=>{return userstore.getuserinfor()}
-  // ()=>{return userformdata.value = userstore.user}
-)
 const ischangeinformation = ref(true)
 const changeinformation = () => {
   ischangeinformation.value = false
@@ -66,7 +77,7 @@ const blackinformation = () => {
 }
 
 const onchangeinfor = async () => { //这里的作用就是用来修改个人信息的地方
-
+  
   await changeuserinfo(userformdata.value)
   userstore.getuserinfor()
   ischangeinformation.value = true 
@@ -115,11 +126,11 @@ const onchangeinfor = async () => { //这里的作用就是用来修改个人信
         <el-form
           class="edit-form"
           label-width="auto"
+          :rules="userformrules"
           :module="userformdata"
            v-if="!ischangeinformation">
           <div class="form-grid">
             <!-- 表单项 -->
-
             <el-form-item style="text-align: center;margin: 20px auto;display: flex;flex-grow: 10;">
                 <img  class="profile-avatar" src="@/assets/avatar.jpg" alt="">
             </el-form-item>
@@ -129,14 +140,16 @@ const onchangeinfor = async () => { //这里的作用就是用来修改个人信
             <el-form-item label="用户名:" prop="username">
               <el-input v-model="userformdata.username" placeholder="请输入用户名"></el-input>
             </el-form-item>
+            <el-form-item label="昵称:" prop="nickName">
+              <el-input v-model="userformdata.nickName" placeholder="请输入昵称"></el-input>
+            </el-form-item>
             <!-- 未开发 -->
-            <el-form-item label="旧密码:" prop="password">
+            <!-- <el-form-item label="旧密码:" prop="password">
               <el-input v-model="userformdata.password" placeholder="请输入旧密码" type="password"></el-input>
             </el-form-item>
-            <!-- 未开发 -->
             <el-form-item label="新密码:">
               <el-input placeholder="请输入新密码" type="password"></el-input>
-            </el-form-item>
+            </el-form-item> -->
           </div>
           <!-- 提交按钮 -->
           <div class="form-actions">

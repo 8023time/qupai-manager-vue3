@@ -12,7 +12,7 @@ export const UseUserStore = defineStore('qupai-user',()=>{
     }
 
     //在下面的这里存的就是用户的一些个人的信息
-    const user = ref('')
+    const user = ref({})
     const getuserinfor = async() => {
         const res = await ckeckuserinfo()
         user.value=res.data.data

@@ -1,6 +1,13 @@
 <script setup>
 import LayoutHeader from './components/LayoutHeader.vue';
+import { onMounted } from 'vue'
+import { UseUserStore } from '@/stores';
 import { CirclePlus, List, Management, User, Goods, ShoppingCartFull } from '@element-plus/icons-vue';
+
+const userstore = UseUserStore()
+onMounted(
+    ()=>userstore.getuserinfor()
+)
 </script>
 
 <template>
