@@ -1,3 +1,3 @@
 # qupai-manager-vue3
 
-![image](https://github.com/user-attachments/assets/77d61bf1-b1b7-4d5f-8d0a-c0a4a666f701)
+![image](https://github.com/user-attachments/assets/ae364dcc-9999-402f-b04c-f3fae1352169)
