@@ -7,66 +7,58 @@ const userstore = UseUserStore()
 </script>
 
 <template>
-    <div class="profile-content">
-        <img
-            class="profile-avatar"
-            src="@/assets/avatar.jpg"
-            alt="头像"
-          />
-          <div class="profile-info">
-                <el-form
-                class="demo-ruleForm"
-                label-width="auto"
-                >
-                    <ul>
-                    <li>
-                        <el-form-item label="姓名:">
-                        {{userstore.user.name || "未留名"}}
-                        </el-form-item>
-                    </li>
-                    <li>
-                        <el-form-item label="昵称:">
-                        {{userstore.user.nickName || "未留名"}}
-                        </el-form-item>
-                    </li>
-                    <li>
-                        <el-form-item label="用户名:">
-                        {{userstore.user.username || "未知用户"}}
-                        </el-form-item>
-                    </li>
-                    <li>
-                        <el-form-item label="电话:">
-                        {{userstore.user.phone || "还未添加联系电话"}}
-                        </el-form-item>
-                    </li>
-                    <!-- 未开发 -->
-                    <!-- <li>
-                        <el-form-item label="联系邮箱:">
-                        {{"还未添加联系邮箱"}}
-                        </el-form-item>
-                    </li> -->
-                    <li>
-                        <el-form-item label="举办拍卖会次数:">
-                        {{userstore.user.chance || "还未举办过拍卖会"}}
-                        </el-form-item>
-                    </li>
-                    </ul>
-                </el-form>
-            </div>
+  <div class="profile-content">
+    <img class="profile-avatar" src="@/assets/avatar.jpg" alt="头像" />
+    <div class="profile-info">
+      <el-form class="demo-ruleForm" label-width="auto">
+        <ul>
+          <li>
+            <el-form-item label="姓名:">
+              {{ userstore.user.name || "未留名" }}
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="昵称:">
+              {{ userstore.user.nickName || "未留名" }}
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="用户名:">
+              {{ userstore.user.username || "未知用户" }}
+            </el-form-item>
+          </li>
+          <li>
+            <el-form-item label="电话:">
+              {{ userstore.user.phone || "还未添加联系电话" }}
+            </el-form-item>
+          </li>
+          <!-- 未开发 -->
+          <!-- <li>
+            <el-form-item label="联系邮箱:">
+            {{"还未添加联系邮箱"}}
+            </el-form-item>
+          </li> -->
+          <li>
+            <el-form-item label="举办拍卖会次数:">
+              {{ userstore.user.chance || "还未举办过拍卖会" }}
+            </el-form-item>
+          </li>
+        </ul>
+      </el-form>
     </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.el-form-item
-{
-justify-content:  flex-start;
+.el-form-item {
+  justify-content: flex-start;
 }
 
 .profile-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-//   padding: 20px;
+  //   padding: 20px;
 }
 
 .profile-avatar {

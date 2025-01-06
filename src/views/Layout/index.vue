@@ -1,88 +1,98 @@
 <script setup>
-import LayoutHeader from './components/LayoutHeader.vue';
+import { CirclePlus, List, Management, User, Goods, ShoppingCartFull } from '@element-plus/icons-vue'
+import LayoutHeader from './components/LayoutHeader.vue'
+import { UseUserStore } from '@/stores'
 import { onMounted } from 'vue'
-import { UseUserStore } from '@/stores';
-import { CirclePlus, List, Management, User, Goods, ShoppingCartFull } from '@element-plus/icons-vue';
 
+// 在开始的框架中获取用户的个人信息
 const userstore = UseUserStore()
 onMounted(
-    ()=>userstore.getuserinfor()
+  () => userstore.getuserinfor()
 )
 </script>
 
 <template>
-    <div class="common-layout">
+  <div class="common-layout">
+    <el-container>
+      <el-header height="80px" class="header">
+
+        <LayoutHeader></LayoutHeader>
+
+      </el-header>
       <el-container>
-        <el-header height="80px" style="background: #ebfffa;">
+        <el-aside width="200px" style="background-color: #75bdf0;">
+          <el-menu class="aside" :default-active="$route.path" router>
+            <el-menu-item index="/auction/release">
+              <el-icon>
+                <CirclePlus></CirclePlus>
+              </el-icon>
+              <span>发布拍卖会</span>
+            </el-menu-item>
+            <el-menu-item index="/auction/list">
+              <el-icon>
+                <List></List>
+              </el-icon>
+              <span>拍卖会列表</span>
+            </el-menu-item>
+            <el-menu-item index="/auction/hosting">
+              <el-icon>
+                <Management></Management>
+              </el-icon>
+              <span>主持拍卖会</span>
+            </el-menu-item>
+            <el-menu-item index="/management/order">
+              <el-icon>
+                <Goods></Goods>
+              </el-icon>
+              <span>订单管理</span>
+            </el-menu-item>
+            <el-menu-item index="/management/goods">
+              <el-icon>
+                <ShoppingCartFull></ShoppingCartFull>
+              </el-icon>
+              <span>商品管理</span>
+            </el-menu-item>
+            <el-menu-item index="/user">
+              <el-icon>
+                <User></User>
+              </el-icon>
+              <span>个人信息</span>
+            </el-menu-item>
+          </el-menu>
 
-          <LayoutHeader></LayoutHeader>
-    
-        </el-header>
-        <el-container>
-          <el-aside width="200px" style="background-color: #75bdf0;">
-           <el-menu
-           class="aside"
-           :default-active="$route.path"
-           router
-           >
-              <el-menu-item index="/auction/release">
-                <el-icon><CirclePlus></CirclePlus></el-icon>
-                <span>发布拍卖会</span>
-              </el-menu-item>
-              <el-menu-item index="/auction/list">
-                <el-icon><List></List></el-icon>
-                <span>拍卖会列表</span>
-              </el-menu-item>
-              <el-menu-item index="/auction/hosting">
-                <el-icon><Management></Management></el-icon>
-                <span>主持拍卖会</span>
-              </el-menu-item>
-              <el-menu-item index="/management/order">
-                <el-icon><Goods></Goods></el-icon>
-                <span>订单管理</span>
-              </el-menu-item>
-              <el-menu-item index="/management/goods">
-                <el-icon><ShoppingCartFull></ShoppingCartFull></el-icon>
-                <span>商品管理</span>
-              </el-menu-item>
-              <el-menu-item index="/user">
-                <el-icon><User></User></el-icon>
-                <span>个人信息</span>
-              </el-menu-item>
-           </el-menu>
-
-          </el-aside>
-          <el-main class="mainbody">
-            <div class="main-body">
-              <router-view></router-view>
-            </div>
-          </el-main>
-        </el-container>
+        </el-aside>
+        <el-main class="mainbody">
+          <div class="main-body">
+            <router-view></router-view>
+          </div>
+        </el-main>
       </el-container>
-    </div>
+    </el-container>
+  </div>
 
 </template>
 
 <style>
-.common-layout
-{
+.common-layout {
   background-color: #e3e3e3;
 }
-.mainbody
-{
-  background-color:#f0f0f4;
+
+.mainbody {
+  background-color: #f0f0f4;
 }
-.main-body
-{
+
+.main-body {
   border-radius: 30px;
   height: 80vh;
-  /* padding: 20px; */
   margin: 10px;
   background-color: #ffffff;
 }
-.aside
-{
+
+.aside {
   height: 100%;
 }
 
+.header {
+  background: #ebfffa;
+}
 </style>
