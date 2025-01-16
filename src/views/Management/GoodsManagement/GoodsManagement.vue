@@ -100,22 +100,50 @@ const addgoodsinformation = ref(
     itemName: '',
     provider: '',
     itemDescription: '',
-    startingPrice: ''
-}
+    startingPrice: 0,
+    minimumPriceIncrease: 0,
+    relatedSessions: '',
+    goodsStatus: ''
+  }
 ) // 用来收集添加商品的信息
 const Slow_Dialog = ref(false)// 添加商品时跳出来的弹弹窗口
 const addGoods = () => {
   Slow_Dialog.value = true
 }
 const and_Goods_infor = async () => { // 添加商品
+   // 表单校验
+   if (!addgoodsinformation.value.itemName) {
+    ElMessage.error('商品名称不能为空');
+    return
+  }
+  if (addgoodsinformation.value.startingPrice <= 0) {
+    ElMessage.error('起拍价格必须大于0');
+    return
+  }
+  if (addgoodsinformation.value.minimumPriceIncrease <= 0) {
+    ElMessage.error('最低加价必须大于0');
+    return
+  }
   try{
   await addGoodsInfo(addgoodsinformation.value)
   ElMessage.success('添加商品成功')
   getGoodsList()
+  // 清空表单
+  addgoodsinformation.value = {
+      id: '',
+      auctionId: '',
+      itemName: '',
+      provider: '',
+      itemDescription: '',
+      startingPrice: 0,
+      minimumPriceIncrease: 0,
+      relatedSessions: '',
+      goodsStatus: ''
+    }
 }catch(error){
   ElMessage.error('添加商品失败')
 }finally{
-  Slow_Dialog = false
+  Slow_Dialog.value = false
 }
 }
 
@@ -173,21 +201,65 @@ onMounted(() => {
     </template>
 
     <!-- 添加商品时跳出来的弹窗口 -->
-    <el-dialog
-    v-model="Slow_Dialog"
-    title="商品信息"
-    width="500"
-    >
-    <span>在这里用发来存储一些表格的地方</span>
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="Slow_Dialog = false">取消</el-button>
-        <el-button type="primary" @click="and_Goods_infor">
-          确定
-        </el-button>
-      </div>
-    </template>
-    </el-dialog>
+    <el-dialog v-model="Slow_Dialog" title="添加商品" width="500px">
+  <el-form :model="addgoodsinformation" label-width="100px">
+    <el-form-item label="商品名称">
+      <el-input
+        v-model="addgoodsinformation.itemName"
+        placeholder="请输入商品名称"
+        clearable />
+    </el-form-item>
+    <el-form-item label="提供者">
+      <el-input
+        v-model="addgoodsinformation.provider"
+        placeholder="请输入提供者名称"
+        clearable />
+    </el-form-item>
+    <el-form-item label="商品描述">
+      <el-input
+        v-model="addgoodsinformation.itemDescription"
+        placeholder="请输入商品描述"
+        type="textarea"
+        rows="3"
+        clearable />
+    </el-form-item>
+    <el-form-item label="起拍价格">
+      <el-input-number
+        v-model="addgoodsinformation.startingPrice"
+        placeholder="请输入起拍价格"
+        :min="0"
+        controls-position="right" />
+    </el-form-item>
+    <el-form-item label="最低加价">
+      <el-input-number
+        v-model="addgoodsinformation.minimumPriceIncrease"
+        placeholder="请输入最低加价"
+        :min="0"
+        controls-position="right" />
+    </el-form-item>
+    <el-form-item label="关联场次">
+      <el-input
+        v-model="addgoodsinformation.relatedSessions"
+        placeholder="请输入关联场次"
+        clearable />
+    </el-form-item>
+    <el-form-item label="商品状态">
+      <el-select v-model="addgoodsinformation.goodsStatus" placeholder="请选择商品状态">
+        <el-option label="未上架" value="未上架" />
+        <el-option label="未拍" value="未拍" />
+        <el-option label="拍卖中" value="拍卖中" />
+        <el-option label="已拍" value="已拍" />
+        <el-option label="逾期未拍" value="逾期未拍" />
+      </el-select>
+    </el-form-item>
+  </el-form>
+
+  <template #footer>
+    <el-button @click="Slow_Dialog = false">取消</el-button>
+    <el-button type="primary" @click="and_Goods_infor">确定</el-button>
+  </template>
+</el-dialog>
+
 
     <el-form inline>
       <el-form-item label="全部商品:" style="width: 240px;">
