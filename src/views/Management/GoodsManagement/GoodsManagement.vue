@@ -6,6 +6,7 @@ import { checkgoodscollect } from '@/api/goods'
 import { changegoodsinfo } from '@/api/goods'
 import { checkallgoodsinformation } from '@/api/goods'
 import { ElMessage } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
 
@@ -102,13 +103,19 @@ const addgoodsinformation = ref(
     startingPrice: ''
 }
 ) // 用来收集添加商品的信息
-const addGoods = async () => {
-try{
-  await addGoodsInfo(addgoodsinformation)
+const Slow_Dialog = ref(false)// 添加商品时跳出来的弹弹窗口
+const addGoods = () => {
+  Slow_Dialog.value = true
+}
+const and_Goods_infor = async () => { // 添加商品
+  try{
+  await addGoodsInfo(addgoodsinformation.value)
   ElMessage.success('添加商品成功')
   getGoodsList()
 }catch(error){
   ElMessage.error('添加商品失败')
+}finally{
+  Slow_Dialog = false
 }
 }
 
@@ -122,6 +129,7 @@ const deleteSelectedGoods = async () => {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning',
+      center: true
     }
   )
     await deletegoods()
@@ -163,6 +171,23 @@ onMounted(() => {
       <el-button type="danger" @click="deleteSelectedGoods">批量删除</el-button>
       <el-button type="primary" @click="addGoods">添加商品</el-button>
     </template>
+
+    <!-- 添加商品时跳出来的弹窗口 -->
+    <el-dialog
+    v-model="Slow_Dialog"
+    title="商品信息"
+    width="500"
+    >
+    <span>在这里用发来存储一些表格的地方</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="Slow_Dialog = false">取消</el-button>
+        <el-button type="primary" @click="and_Goods_infor">
+          确定
+        </el-button>
+      </div>
+    </template>
+    </el-dialog>
 
     <el-form inline>
       <el-form-item label="全部商品:" style="width: 240px;">
@@ -215,8 +240,9 @@ onMounted(() => {
       <!-- 在这里的话就用到的就是插槽 -->
       <el-table-column label="操作">
         <template #default="{ row }">
-          <el-button size="mini" type="primary" circle :icon="Edit"></el-button>
-          <el-button size="mini" type="danger" circle :icon="Delete" @click="deleteSelectedGoods"></el-button>
+          <el-button size="mini" type="primary" circle :icon="Edit">修改</el-button>
+          <el-button size="mini" type="danger" circle :icon="Delete" @click="deleteSelectedGoods">删除</el-button>
+          <el-button size="mini" type="primary" circle :icon="Edit">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
