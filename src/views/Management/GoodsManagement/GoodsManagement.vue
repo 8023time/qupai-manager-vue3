@@ -9,13 +9,29 @@ import { ElMessage } from 'element-plus'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
 
+// 是否加载
 const loading = ref(false)
+
+// 商品状态 --- 在下拉菜单中可以选择,这个是记录选择哪一个
 const articledatamessage = ref()
+
+// 表格下的页面数目
 const articlerootref = ref()
-const value1 = ref()
+
+// 起止时间
+const Start_End_Time = ref() // 用来记录起止时间
 
 // 获取商品列表
-const allgoodslist = ref()
+const allgoodslist = ref( // 获取商品的
+  {
+    itemName: '', // 商品名字
+    GoodsStatus:'', // 商品状态
+    startingPrice: '', // 起拍积分
+    Minimumpriceincrease: '', // 保底加价
+    Relatedsessions: '', // 关联场次
+    createTime:'', // 发布时间
+  }
+)
 const getGoodsList = async () => {
  loading.value=true
  try{
@@ -29,7 +45,16 @@ const getGoodsList = async () => {
 }
 
 // 添加商品
-const addgoodsinformation = ref() // 用来收集添加商品的信息
+const addgoodsinformation = ref(
+  {
+    id: '',
+    auctionId: '',
+    itemName: '',
+    provider: '',
+    itemDescription: '',
+    startingPrice: ''
+}
+) // 用来收集添加商品的信息
 const addGoods = async () => {
 try{
   await addGoodsInfo(addgoodsinformation)
@@ -102,7 +127,7 @@ onMounted(() => {
 
         <div class="demo-date-picker">
           <div class="block">
-            <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始时间"
+            <el-date-picker v-model="Start_End_Time" type="daterange" range-separator="至" start-placeholder="开始时间"
               end-placeholder="终止时间" size="default" />
           </div>
         </div>
@@ -115,25 +140,19 @@ onMounted(() => {
     </el-form>
 
     <!-- 在下面的这里就是用来存储相关数据的地方 -->
-    <el-table :data="articledatamessage" empty-text="亲,目前没有商品信息" style="width: 100%; height: 100%;" v-loading="loading">
+    <el-table :data="allgoodslist" empty-text="亲,目前没有商品信息" style="width: 100%; height: 100%;" v-loading="loading">
       <!-- 在这里也是用到的是插槽 -->
-      <el-table-column label="商品名">
-        12
+      <el-table-column label="商品名" prop="itemName">
       </el-table-column>
-      <el-table-column label="商品状态">
-        12
+      <el-table-column label="商品状态" prop="GoodsStatus">
       </el-table-column>
-      <el-table-column label="起拍积分">
-        12
+      <el-table-column label="起拍积分" prop="startingPrice">
       </el-table-column>
-      <el-table-column label="保底加价">
-        123
+      <el-table-column label="保底加价" prop="Minimumpriceincrease">
       </el-table-column>
-      <el-table-column label="关联场次">
-        141
+      <el-table-column label="关联场次" prop="Relatedsessions">
       </el-table-column>
-      <el-table-column label="发布时间">
-
+      <el-table-column label="发布时间" prop="createTime">
       </el-table-column>
 
       <!-- 在这里的话就用到的就是插槽 -->
