@@ -4,6 +4,9 @@ import { deletegoods } from '@/api/goods'
 import { checkgoodsinfo } from '@/api/goods'
 import { checkgoodscollect } from '@/api/goods'
 import { changegoodsinfo } from '@/api/goods'
+import { checkallgoodsinformation } from '@/api/goods'
+import { ElMessage } from 'element-plus'
+import { onMounted } from 'vue'
 import { ref } from 'vue'
 
 const loading = ref(false)
@@ -12,18 +15,49 @@ const articlerootref = ref()
 const value1 = ref()
 
 // 获取商品列表
-const getGoodsList = () => {
-
+const allgoodslist = ref()
+const getGoodsList = async () => {
+ loading.value=true
+ try{
+  const respomse = await checkallgoodsinformation()
+  allgoodslist.value=respomse.data
+ }catch(error){
+  ElMessage.error('获取商品信息失败')
+ }finally{
+  loading.value = false
+ }
 }
 
 // 添加商品
-const addGoods = () => {
-
+const addgoodsinformation = ref() // 用来收集添加商品的信息
+const addGoods = async () => {
+try{
+  await addGoodsInfo(addgoodsinformation)
+  ElMessage.success('添加商品成功')
+  getGoodsList()
+}catch(error){
+  ElMessage.error('添加商品失败')
+}
 }
 
 // 删除商品
-const deleteSelectedGoods = () => {
-
+const deleteSelectedGoods = async () => {
+  try{
+    await ElMessageBox.confirm( // 用来提示是不是确定要删除指定的商品
+    '确定要删除选定的商品吗?',
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    await deletegoods()
+    ElMessage.success('删除商品成功')
+    getGoodsList() // 重新获取商品的一些信息
+  }catch(error){
+    ElMessage.error('删除商品失败')
+  }
 }
 
 // 搜索商品
@@ -36,9 +70,9 @@ const resetSearch = () => {
 
 }
 
-// onMounted(() => {
-
-// })
+onMounted(() => {
+  getGoodsList()
+})
 </script>
 
 <template>
