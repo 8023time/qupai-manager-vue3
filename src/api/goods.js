@@ -15,6 +15,7 @@ export const checkgoodsinfo = (auctionItemId) => {
   return request.get(`/auction/auction-item/getByAuctionItemId/${auctionItemId}`)
 }
 
+// ------ 这里需要进行修改操作处理,将这里的查找条件改为和之前的原理图基本就可以
 // 根据拍卖会id查询拍卖品集合
 export const checkgoodscollect = (auctionId) => {
   return request.get(`/auction/auction-item/getItemByAuctionId/${auctionId}`)

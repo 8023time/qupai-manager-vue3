@@ -9,6 +9,50 @@ import { ElMessage } from 'element-plus'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
 
+// 暂时的数据
+const mockGoodsList = [
+  {
+    itemName: "古董花瓶",
+    GoodsStatus: "未上架",
+    startingPrice: 200,
+    Minimumpriceincrease: 20,
+    Relatedsessions: "2025春节拍卖会",
+    createTime: "2025-01-01",
+  },
+  {
+    itemName: "翡翠项链",
+    GoodsStatus: "未拍",
+    startingPrice: 500,
+    Minimumpriceincrease: 50,
+    Relatedsessions: "2025新年拍卖会",
+    createTime: "2025-01-05",
+  },
+  {
+    itemName: "名家书法",
+    GoodsStatus: "拍卖中",
+    startingPrice: 1000,
+    Minimumpriceincrease: 100,
+    Relatedsessions: "2025艺术品专场",
+    createTime: "2025-01-10",
+  },
+  {
+    itemName: "珍藏邮票",
+    GoodsStatus: "已拍",
+    startingPrice: 300,
+    Minimumpriceincrease: 30,
+    Relatedsessions: "2024秋季拍卖会",
+    createTime: "2024-12-20",
+  },
+  {
+    itemName: "限量版手表",
+    GoodsStatus: "逾期未拍",
+    startingPrice: 800,
+    Minimumpriceincrease: 80,
+    Relatedsessions: "2024冬季拍卖会",
+    createTime: "2024-11-15",
+  },
+];
+
 // 是否加载
 const loading = ref(false)
 
@@ -23,14 +67,17 @@ const Start_End_Time = ref() // 用来记录起止时间
 
 // 获取商品列表
 const allgoodslist = ref( // 获取商品的
-  {
-    itemName: '', // 商品名字
-    GoodsStatus:'', // 商品状态
-    startingPrice: '', // 起拍积分
-    Minimumpriceincrease: '', // 保底加价
-    Relatedsessions: '', // 关联场次
-    createTime:'', // 发布时间
-  }
+
+mockGoodsList // 暂时的数据
+
+  // {
+  //   itemName: '', // 商品名字
+  //   GoodsStatus:'', // 商品状态
+  //   startingPrice: '', // 起拍积分
+  //   Minimumpriceincrease: '', // 保底加价
+  //   Relatedsessions: '', // 关联场次
+  //   createTime:'', // 发布时间
+  // }
 )
 const getGoodsList = async () => {
  loading.value=true
@@ -86,13 +133,23 @@ const deleteSelectedGoods = async () => {
 }
 
 // 搜索商品
-const searchGoods = () => {
-
+const searchGoods = async () => {
+loading.value = true
+try{
+  const response =  await checkgoodscollect() // ----------这里需要进行修改
+  allgoodslist.value = response.data
+}catch(error){
+  ElMessage.error('查询失败')
+}finally{
+  loading.value = false
+}
 }
 
 // 重置搜索条件
 const resetSearch = () => {
-
+  articledatamessage.value = ''
+  Start_End_Time.value = null
+  getGoodsList()
 }
 
 onMounted(() => {
