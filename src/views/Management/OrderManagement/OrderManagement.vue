@@ -1,27 +1,97 @@
 <script setup>
+import { ElMessage } from 'element-plus'
+import { onMounted } from 'vue'
 import {ref} from 'vue'
 
 // 加载动画
 const loading = ref(false)
 
+// const articlerootref = ref()
+
+// 记录搜索内容
 const articledatamessage = ref()
 
-// const articlerootref = ref()
-const value1 = ref()
+// 起止时间
+const Start_End_Time = ref() // 用来记录起止时间
 
+// 获取订单列表
+const orderList = ref()// d订单列表
+const getorderlist = async () => {
+  loading.value = true
+  try{
+    // 模拟获取订单列表
+    const response = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: [
+            { orderNumber: '001', productName: '商品1', orderStatus: '待派发', orderTime: '2024-01-01' },
+            { orderNumber: '002', productName: '商品2', orderStatus: '已派发', orderTime: '2024-02-01' },
+            { orderNumber: '003', productName: '商品3', orderStatus: '完成', orderTime: '2024-03-01' },
+            { orderNumber: '004', productName: '商品4', orderStatus: '待派发', orderTime: '2024-04-01' },
+          ]
+        })
+      }, 100)
+    })
+    orderList.value = response.data
+    ElMessage.success('获取订单列表成功')
+  }catch(error){
+    ElMessage.error('获取订单列表失败')
+  }finally{
+    loading.value = false
+  }
+}
+
+// 搜索订单
+const searchOrders = async () => {
+  loading.value = true
+  try {
+    // 模拟搜索订单
+    const response = await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: orderList.value.filter(order => order.orderStatus === articledatamessage.value)
+        })
+      }, 1000)
+    })
+    orderList.value = response.data
+  } catch (error) {
+    ElMessage.error('搜索订单失败')
+  } finally {
+    loading.value = false
+  }
+}
+
+// 重置搜索条件
+const resetSearch = () => {
+  articledatamessage.value = ''
+  value1.value = null
+  getOrderList()
+}
+
+// 刚开始加载的函数
+onMounted(
+  () => {
+    getorderlist()
+  }
+)
 </script>
 
 <template>
   <SameCard title="订单管理">
     <template #extra>
       <div class="top_site">
-        <span>全部订单</span>
-        <el-divider direction="vertical"/>
-        <span>待派发</span>
-        <el-divider direction="vertical"/>
-        <span>已派发</span>
-        <el-divider direction="vertical"/>
-        <span>完成</span>
+        <el-badge :value="12" class="item">
+          <el-button>全部订单</el-button>
+        </el-badge>
+        <el-badge :value="6" class="item">
+          <el-button>待派发</el-button>
+        </el-badge>
+        <el-badge :value="4" class="item">
+          <el-button>已派发</el-button>
+        </el-badge>
+        <el-badge :value="2" class="item">
+          <el-button>完成</el-button>
+        </el-badge>
       </div>
     </template>
 
@@ -44,6 +114,7 @@ const value1 = ref()
         <div class="demo-date-picker">
           <div class="block">
             <el-date-picker
+              v-model="Start_End_Time"
               type="daterange"
               range-separator="至"
               start-placeholder="开始时间"
@@ -54,26 +125,23 @@ const value1 = ref()
         </div>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">搜索</el-button>
-        <el-button>重置</el-button>
+        <el-button type="primary" @click="searchOrders">搜索</el-button>
+        <el-button @click="resetSearch">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table style="width: 100%;  height: 100%;" empty-text="亲,目前没有订单信息" v-loading="loading">
-      <el-table-column label="订单号">
-        12
+    <el-table :data="orderList" style="width: 100%;  height: 100%;" empty-text="亲,目前没有订单信息" v-loading="loading">
+      <el-table-column label="订单号" prop="">
       </el-table-column>
-      <el-table-column label="订单状态">
-        12
+      <el-table-column label="订单状态" prop="">
       </el-table-column>
-      <el-table-column label="用户名">
-        12
+      <el-table-column label="用户名" prop="">
       </el-table-column>
-      <el-table-column label="手机号">
+      <el-table-column label="手机号" prop="">
       </el-table-column>
-      <el-table-column label="下单时间">
+      <el-table-column label="下单时间" prop="">
       </el-table-column>
-      <el-table-column label="实收积分">
+      <el-table-column label="实收积分" prop="">
       </el-table-column>
       <el-table-column label="操作">
         <template #default="{ row }">
@@ -100,17 +168,12 @@ const value1 = ref()
 
 <style scoped>
 .top_site {
-  width: 100%;
-  heigth: 90px;
+  /* width: 100%; */
+  /* height: 90px; */
   font-size: 24px;
-  display: flex;
-  background-color: #f5f5f5;
+  /* display: flex; */
+  /* background-colo  r: #f5f5f5; */
   margin-right: 50px;
-}
-
-.top_site span {
-  padding: 9px;
-  border: 1px solid black;
 }
 
 .demo-date-picker {

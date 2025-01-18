@@ -222,9 +222,9 @@ const addgoodsinformation = ref(
     provider: '',
     itemDescription: '',
     startingPrice: 0,
-    minimumPriceIncrease: 0,
-    relatedSessions: '',
-    goodsStatus: ''
+    // minimumPriceIncrease: 0,
+    // relatedSessions: '',
+    // goodsStatus: ''
   }
 ) // 用来收集添加商品的信息
 const Slow_Dialog = ref(false)// 添加商品时跳出来的弹弹窗口
@@ -250,6 +250,10 @@ const and_Goods_infor = async () => { // 添加商品
     await addGoodsInfo(addgoodsinformation.value)
     ElMessage.success('添加商品成功')
     getGoodsList()
+  } catch (error) {
+    ElMessage.error('添加商品失败')
+  } finally {
+    Slow_Dialog.value = false
     // 清空表单
     addgoodsinformation.value = {
       id: '',
@@ -258,14 +262,10 @@ const and_Goods_infor = async () => { // 添加商品
       provider: '',
       itemDescription: '',
       startingPrice: 0,
-      minimumPriceIncrease: 0,
-      relatedSessions: '',
-      goodsStatus: ''
+      // minimumPriceIncrease: 0,
+      // relatedSessions: '',
+      // goodsStatus: ''
     }
-  } catch (error) {
-    ElMessage.error('添加商品失败')
-  } finally {
-    Slow_Dialog.value = false
   }
 }
 
@@ -400,7 +400,7 @@ onMounted(() => {
           />
         </el-form-item>
         <!-- 最低加价 -->
-        <el-form-item label="最低加价" prop="minimumPriceIncrease"
+        <!-- <el-form-item label="最低加价" prop="minimumPriceIncrease"
                       :rules="[{ required: true, message: '请输入最低加价', trigger: 'blur' }]">
           <el-input-number
             v-model="addgoodsinformation.minimumPriceIncrease"
@@ -409,9 +409,9 @@ onMounted(() => {
             controls-position="right"
             class="form-item-input"
           />
-        </el-form-item>
+        </el-form-item> -->
         <!-- 关联场次 -->
-        <el-form-item label="关联场次" prop="relatedSessions"
+        <!-- <el-form-item label="关联场次" prop="relatedSessions"
                       :rules="[{ required: true, message: '请输入关联场次', trigger: 'blur' }]">
           <el-input
             v-model="addgoodsinformation.relatedSessions"
@@ -419,9 +419,9 @@ onMounted(() => {
             clearable
             class="form-item-input"
           />
-        </el-form-item>
+        </el-form-item> -->
         <!-- 商品状态 -->
-        <el-form-item label="商品状态" prop="goodsStatus"
+        <!-- <el-form-item label="商品状态" prop="goodsStatus"
                       :rules="[{ required: true, message: '请选择商品状态', trigger: 'change' }]">
           <el-select
             v-model="addgoodsinformation.goodsStatus"
@@ -434,9 +434,9 @@ onMounted(() => {
             <el-option label="已拍" value="已拍"/>
             <el-option label="逾期未拍" value="逾期未拍"/>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 底部按钮 -->
-        <template #footer>
+        <!-- <template #footer> -->
           <el-button @click="Slow_Dialog = false" size="medium" class="button-cancel">取消</el-button>
           <el-button
             type="primary"
@@ -445,7 +445,7 @@ onMounted(() => {
             class="button-submit"
           >保存商品
           </el-button>
-        </template>
+        <!-- </template> -->
       </el-form>
     </el-dialog>
 
