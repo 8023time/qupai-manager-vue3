@@ -26,7 +26,7 @@ export const changegoodsinfo = (data) => {
   return request.post('/auction/auction-item/updateItem', data)
 }
 
-// 新增加一个:
+// 新增加一个
 // 查看所有的商品的信息
 export const checkallgoodsinformation = () => {
   return // 新增加一些商品的所有信息

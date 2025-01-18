@@ -1,14 +1,30 @@
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 
+// 加载动画
 const loading = ref(false)
+
 const articledatamessage = ref()
-const articlerootref =ref()
-const value1 =ref()
+
+// const articlerootref = ref()
+const value1 = ref()
+
 </script>
 
 <template>
   <SameCard title="订单管理">
+    <template #extra>
+      <div class="top_site">
+        <span>全部订单</span>
+        <el-divider direction="vertical"/>
+        <span>待派发</span>
+        <el-divider direction="vertical"/>
+        <span>已派发</span>
+        <el-divider direction="vertical"/>
+        <span>完成</span>
+      </div>
+    </template>
+
     <el-form inline>
       <el-form-item label="订单分类:" style="width: 240px;">
         <el-select>
@@ -67,22 +83,36 @@ const value1 =ref()
         </template>
       </el-table-column>
     </el-table>
-
-    <el-pagination
-      v-model:current-page="articlerootref"
-      v-model:page-size="articlerootref"
-      :page-sizes="[5, 7, 9, 11]"
-      :background="true"
-      layout=" jumper, sizes, prev, pager, next, total"
-      :total="tatalarticleinformation"
-      @size-change="onSizeChange"
-      @current-change="onCurrentChange"
-      style="justify-content: flex-end"
-    />
+    <!--分页逻辑-->
+    <!--    <el-pagination-->
+    <!--      v-model:current-page="articlerootref"-->
+    <!--      v-model:page-size="articlerootref"-->
+    <!--      :page-sizes="[5, 7, 9, 11]"-->
+    <!--      :background="true"-->
+    <!--      layout=" jumper, sizes, prev, pager, next, total"-->
+    <!--      :total="tatalarticleinformation"-->
+    <!--      @size-change="onSizeChange"-->
+    <!--      @current-change="onCurrentChange"-->
+    <!--      style="justify-content: flex-end"-->
+    <!--    />-->
   </SameCard>
 </template>
 
 <style scoped>
+.top_site {
+  width: 100%;
+  heigth: 90px;
+  font-size: 24px;
+  display: flex;
+  background-color: #f5f5f5;
+  margin-right: 50px;
+}
+
+.top_site span {
+  padding: 9px;
+  border: 1px solid black;
+}
+
 .demo-date-picker {
   display: flex;
   width: 100%;
